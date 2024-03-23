@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cymbs4bjd1gpq"]
+
+[ext_resource type="PackedScene" uid="uid://cvikaxwd5738i" path="res://main/dungeon_manager.tscn" id="1_ceslq"]
+
+[node name="Game" type="Node2D"]
+
+[node name="DungeonManager" parent="." instance=ExtResource("1_ceslq")]

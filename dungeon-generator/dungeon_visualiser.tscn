@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://bste7ofemv67"]
+
+[ext_resource type="Script" path="res://dungeon-generator/dungeon_visualiser.gd" id="1_6y2kk"]
+
+[node name="DungeonVisualiser" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_6y2kk")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1064.0
+offset_top = 567.0
+offset_right = 1156.0
+offset_bottom = 615.0
+scale = Vector2(2.68, 2.96)
+text = "Refresh"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

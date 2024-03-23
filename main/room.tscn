@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://yybsrgi3s83l"]
+
+[ext_resource type="Script" path="res://main/room.gd" id="1_mqpjy"]
+[ext_resource type="Texture2D" uid="uid://b7x8tg3gcmj73" path="res://assets/Dungeon_Tileset.png" id="2_na5o7"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ahsjq"]
+texture = ExtResource("2_na5o7")
+1:0/0 = 0
+0:1/0 = 0
+0:0/0 = 0
+5:1/0 = 0
+5:0/0 = 0
+8:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+5:4/0 = 0
+3:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_o15xo"]
+sources/0 = SubResource("TileSetAtlasSource_ahsjq")
+
+[node name="Room" type="Node2D"]
+script = ExtResource("1_mqpjy")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_o15xo")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 1, 65536, 0, 2, 65536, 0, 3, 65536, 0, 65536, 0, 1, 4, 327680, 0, 131072, 0, 1, 196608, 0, 1, 65540, 327680, 1, 131076, 327680, 1, 196612, 327680, 1, 262145, 65536, 4, 262146, 65536, 4, 262147, 65536, 4, 262144, 0, 4, 262148, 327680, 4, 65537, 196608, 2, 131073, 196608, 2, 196609, 196608, 2, 196610, 196608, 2, 196611, 196608, 2, 131075, 196608, 2, 65539, 196608, 2, 65538, 196608, 2, 131074, 196608, 2)
