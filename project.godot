@@ -17,15 +17,21 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-DungeonGenerator="*res://dungeon-generator/generator.gd"
+DungeonGenerator="*res://global/dungeon_generator.gd"
+GlobalConfig="*res://global/global_config.gd"
 
 [display]
 
-window/size/viewport_width=860
-window/size/viewport_height=540
+window/size/viewport_width=320
+window/size/viewport_height=160
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="canvas_items"
+
+[layer_names]
+
+2d_physics/layer_1="Tiles"
+2d_physics/layer_2="Player"
 
 [rendering]
 

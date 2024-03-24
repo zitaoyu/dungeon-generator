@@ -1,8 +1,11 @@
 extends Control
 
 # Tile size
-const TILE_SIZE = 64
-@onready var dungeon = DungeonGenerator.dungeon
+const TILE_SIZE = 16
+var dungeon = DungeonGenerator.dungeon
+
+func _ready():
+	dungeon = DungeonGenerator.generate_dungeon_matrix()
 
 func _draw():
 	for y in range(dungeon.size()):
@@ -33,7 +36,7 @@ func _draw():
 				draw_rect(Rect2(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE), Color.ALICE_BLUE)
 
 func _on_button_pressed():
-	DungeonGenerator.generate_dungeon()
-	dungeon = DungeonGenerator.dungeon
-	DungeonGenerator.dungeon_to_string()
+	dungeon = DungeonGenerator.generate_dungeon_matrix()
+	DungeonGenerator.print_last_generated_dungeon_matrix()
 	get_tree().reload_current_scene()
+

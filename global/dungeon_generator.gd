@@ -1,6 +1,7 @@
 extends Node
 
 class RoomData:
+	var id: int
 	var x: int
 	var y: int
 	var is_start_room: bool
@@ -21,46 +22,46 @@ class RoomData:
 		bottom_room = false
 
 # Size of the dungeon in terms of rooms
-var MAX_ROOMS = 8
-var DUNGEON_WIDTH = 8
-var DUNGEON_HEIGHT = 8
-var ROOM_SPAWN_CHANCE = 0.30
+var DEFAULT_MAX_ROOMS = 8
+var DEFAULT_DUNGEON_WIDTH = 8
+var DEFAULT_DUNGEON_HEIGHT = 8
+var DEFAULT_ROOM_SPAWN_CHANCE = 0.30
 
 # 2D Array to store dungeon layout
 var dungeon = []
 var rooms = 0
 
-func _ready():
-	#generate_dungeon()
-	pass
-
-func generate_dungeon():
-	# Reset array
+func generate_dungeon_matrix(total_rooms=DEFAULT_MAX_ROOMS,
+					max_width=DEFAULT_DUNGEON_WIDTH, 
+					max_height=DEFAULT_DUNGEON_HEIGHT, 
+					room_spawn_chance=DEFAULT_ROOM_SPAWN_CHANCE):
+	# Clear previous dungeon matrix
 	dungeon.clear()
-	for y in range(DUNGEON_HEIGHT):
+	for y in range(max_height):
 		var row = []
-		for x in range(DUNGEON_WIDTH):
+		for x in range(max_width):
 			row.append(null)
 		dungeon.append(row)
 	rooms = 0
-	add_rooms()
-	return dungeon
-
-func add_rooms():
+	
+	# generate rooms until reach max rooms
 	var queue: Array = []
-	var start_x = randi_range(DUNGEON_WIDTH / 4, DUNGEON_WIDTH / 2)
-	var start_y = randi_range(DUNGEON_HEIGHT / 4, DUNGEON_HEIGHT / 2)
+	var start_x = randi_range(max_width / 4, max_width / 2)
+	var start_y = randi_range(max_height / 4, max_height / 2)
 	queue.append(RoomData.new(start_x, start_y))
 	
-	while (queue && rooms < MAX_ROOMS):
+	while (queue && rooms < total_rooms):
 		var room_data = queue.pop_front()
 		var x = room_data.x
 		var y = room_data.y
+		if dungeon[y][x] is RoomData:
+			continue
 		if rooms == 0:
 			room_data.is_start_room = true
-		elif rooms == MAX_ROOMS - 1:
+		elif rooms == total_rooms - 1:
 			room_data.is_end_room = true
 		connect_rooms(room_data)
+		room_data.id = rooms
 		dungeon[y][x] = room_data
 		rooms += 1
 
@@ -70,9 +71,9 @@ func add_rooms():
 			var d = randomized_direction.pop_front()
 			var new_x = x + d.x
 			var new_y = y + d.y
-			var is_inbound = (new_x >= 0 and new_x < DUNGEON_WIDTH and new_y >= 0 and new_y < DUNGEON_HEIGHT)
+			var is_inbound = (new_x >= 0 and new_x < max_width and new_y >= 0 and new_y < max_height)
 			if is_inbound and dungeon[new_y][new_x] == null:
-				if first_room || randf() < ROOM_SPAWN_CHANCE:
+				if first_room || randf() < room_spawn_chance:
 					# spawn new room
 					var spawn_room = RoomData.new(new_x, new_y)
 					if d == Vector2(0, -1):
@@ -85,6 +86,8 @@ func add_rooms():
 						spawn_room.left_room = true
 					queue.append(spawn_room)
 					first_room = false
+	# return dungeon matrix
+	return dungeon
 
 func connect_rooms(room: RoomData):
 	var x = room.x
@@ -104,7 +107,7 @@ func get_random_directions():
 	directions.shuffle()
 	return directions
 
-func dungeon_to_string():
+func print_last_generated_dungeon_matrix():
 	print("dungeon matrix:")
 	var str = ""
 	for r in dungeon:

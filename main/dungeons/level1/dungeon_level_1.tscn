@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqxr38rv7nubh"]
+
+[ext_resource type="PackedScene" uid="uid://cvikaxwd5738i" path="res://main/dungeons/dungeon.tscn" id="1_te23b"]
+[ext_resource type="PackedScene" uid="uid://yybsrgi3s83l" path="res://main/dungeons/room.tscn" id="2_wf7n4"]
+
+[node name="DungeonLevel1" instance=ExtResource("1_te23b")]
+number_of_rooms = 10
+dungeon_grid_width = 8
+dungeon_grid_height = 4
+dungeon_room_spawn_chance = 0.5
+start_room = ExtResource("2_wf7n4")
+end_room = ExtResource("2_wf7n4")
+room_node_pathes = PackedStringArray("res://main/dungeons/room.tscn")
+
+[node name="Camera2D" parent="." index="0"]
+visible = false
+anchor_mode = 0
+
+[node name="Player" parent="." index="1"]
+z_index = 20
